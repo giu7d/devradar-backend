@@ -3,6 +3,7 @@
 ## Getting Started
 
 DevRadar is a developer finder based on GitHub API. This repository is the backend source code.
+This software is part of Omnistack 10 bootcamp program.
 
 ### Prerequisites
 

@@ -1,27 +1,31 @@
 import Dev from "../models/Dev";
-import parseStringAsArray from "../utils/parseStringAsArray";
-import formatTechsArray from "../utils/formatTechsArray";
+import { formatArrayToTechs, parseStringToArray } from "../utils";
 
 async function index(request, response) {
   const { lat, lon, techs, maxDistance = 1000 } = request.query;
-  const formatedTechs = formatTechsArray(parseStringAsArray(techs));
 
-  const devs = await Dev.find({
-    techs: {
-      $in: formatedTechs
-    },
-    location: {
-      $near: {
-        $geometry: {
-          type: "Point",
-          coordinates: [lon, lat]
-        },
-        $maxDistance: maxDistance
+  try {
+    const formatedTechs = formatArrayToTechs(parseStringToArray(techs));
+
+    const devs = await Dev.find({
+      techs: {
+        $in: formatedTechs
+      },
+      location: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [lon, lat]
+          },
+          $maxDistance: maxDistance
+        }
       }
-    }
-  });
+    });
 
-  return response.json(devs);
+    return response.json(devs);
+  } catch (error) {
+    return response.status(500).json({ error: error.message });
+  }
 }
 
 export default { index };

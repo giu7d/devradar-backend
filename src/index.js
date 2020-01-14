@@ -8,12 +8,12 @@ const MONGODB_URL = "mongodb://localhost:27017" || process.env.MONGODB_URL;
 const app = express();
 const db = mongoose.connection;
 
-// DB
 mongoose.connect(MONGODB_URL, {
   dbName: "devradar_db",
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useFindAndModify: false
 });
 
 db.on("error", err => console.warn(`MONGODB: Error -> ${err}`));

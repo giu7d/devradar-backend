@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import PointSchema from "../utils/PointSchema";
+import { PointSchema } from "../utils";
 
 const DevSchema = new Schema({
   name: String,
